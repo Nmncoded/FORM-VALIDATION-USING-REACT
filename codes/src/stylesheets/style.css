@@ -50,7 +50,7 @@ table {
 /* custom styles */
 
 body {
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     padding: 24px;
 }
 
@@ -67,6 +67,7 @@ form {
     flex-direction: column;
     background-color: rgb(240, 234, 234);
     border-radius: 8px;
+    box-shadow: 8px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 form h1 {
@@ -103,7 +104,6 @@ form input {
 
 .err {
     color: rgba(247, 9, 9, 0.7);
-    text-align: center;
     transform: translateY(-8px);
     padding: 4px;
 }

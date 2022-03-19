@@ -7,9 +7,13 @@ class App extends React.Component {
         super(props);
         this.state =  {
             email: "",
+            confirmPassword: "",
             password : "",
+            username: "",
             errors: {
                 email: "",
+                username : "",
+                confirmPassword: "",
                 password : "",
             }
         }
@@ -26,32 +30,44 @@ class App extends React.Component {
         switch (name) {
             case "email": errors.email  = this.validateEmail(value) ? "" : "Email is not valid"
                 break;
-
-            case "password": errors.password  = value.length > 5 ? "" : "length must be greater than five characters"
+            case "confirmPassword": errors.confirmPassword  = (this.state.password === this.state.confirmPassword) ? "" : "Confirm Password must be same as Password"
+                break;
+            case "password": errors.password  = value.length > 5 ? "" : "length must be atleast five characters"
+                break;
+            case "username": errors.username  = value.length > 3 ? "" : "length must be atLeast three characters"
                 break;
 
             default:
                 break;
         }
-        this.setState({
-            [name] : value,
+        this.setState(() => {
+            return {
+                [name] : value,
+            }
         })
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        alert(this.state.email+ this.state.password)
+        alert(this.state.email+ this.state.password + this.state.username + this.state.confirmPassword)
     }
 
     render(){
-        let {email,password} = this.state.errors;
+        let {email,password,username,confirmPassword} = this.state.errors;
         let emailValue = this.state.email;
         let paswrdValue = this.state.password;
+        let userValue = this.state.username;
+        let confirmValue = this.state.confirmPassword;
         return (
             
             <form onSubmit={this.handleSubmit} >
                 <h1>
-                    User Log In
+                    Register With Us
                 </h1>
+                <label htmlFor='username' >
+                    Username
+                </label >
+                <input type="text" className={ username ? "error" : "" } onChange={this.handleInput} id='username' name='username' value={this.state.username} placeholder="Username" />
+                <span className={ username ? "err" : "" } >{ username ? username : "" }</span>
                 <label htmlFor='email' >
                     Enter Your Email
                 </label >
@@ -62,7 +78,12 @@ class App extends React.Component {
                 </label >
                 <input type="password" className={ password ? "error" : "" } id='password' onChange={this.handleInput} name='password' value={this.state.password} placeholder="password" />
                 <span className={ password ? "err" : "" } >{ password ? password : "" }</span>
-                <input type="submit" className='btn' value="Submit" id={!emailValue || !paswrdValue || email || password ? "activ" : ""} />
+                <label htmlFor='confirm-password' >
+                    Confirm Password
+                </label >
+                <input type="password" className={ confirmPassword ? "error" : "" } id='confirm-password' onChange={this.handleInput} name='confirmPassword' value={this.state.confirmPassword} placeholder="Confirm Password" />
+                <span className={ confirmPassword ? "err" : "" } >{ confirmPassword ? confirmPassword : "" }</span>
+                <input type="submit" className='btn' value="Submit" id={ !userValue || !emailValue || !paswrdValue || !confirmValue || email || password || username || confirmPassword ? "activ" : ""} />
             </form>
         )
     }
